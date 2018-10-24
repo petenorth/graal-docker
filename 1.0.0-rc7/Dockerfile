@@ -1,8 +1,3 @@
-# LICENSE UPL 1.0
-#
-# Copyright (c) 2015 Oracle and/or its affiliates. All rights reserved.
-#
-
 FROM centos
 
 # Note: If you are behind a web proxy, set the build variables for the build:
