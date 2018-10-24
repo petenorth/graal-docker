@@ -9,13 +9,10 @@ ENV LANG=en_US.UTF-8
 ENV GRAALVM_PKG=https://github.com/oracle/graal/releases/download/vm-$GRAAL_VERSION/graalvm-ce-$GRAAL_VERSION-linux-amd64.tar.gz \
     JAVA_HOME=/opt/graalvm-ce-$GRAAL_VERSION/ 
 
-RUN    yum install -y bzip2-devel gcc gcc-c++ less libcurl-devel make openssl-devel readline-devel xz-devel zlib-devel && yum clean all -y 
+RUN yum install -y bzip2-devel gcc gcc-c++ libcurl-devel openssl-devel zlib-devel && yum clean all -y 
 
 RUN set -eux \
-    && curl --fail --silent --location --retry 3 ${GRAALVM_PKG} \
-    | gunzip | tar x -C /opt/ \
-
-    # Set alternative links
+    && curl --fail --silent --location --retry 3 ${GRAALVM_PKG} | tar xz -C /opt/ \
     && mkdir -p "/usr/java" \
     && ln -sfT "$JAVA_HOME" /usr/java/default \
     && ln -sfT "$JAVA_HOME" /usr/java/latest \
