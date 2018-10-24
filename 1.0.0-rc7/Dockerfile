@@ -12,19 +12,9 @@ ARG GRAAL_VERSION=1.0.0-rc7
 ENV LANG=en_US.UTF-8
 
 ENV GRAALVM_PKG=https://github.com/oracle/graal/releases/download/vm-$GRAAL_VERSION/graalvm-ce-$GRAAL_VERSION-linux-amd64.tar.gz \
-    JAVA_HOME=/opt/graalvm-ce-$GRAAL_VERSION/ \
-    PATH=$PATH:/opt/rh/llvm-toolset-7/root/usr/bin \
-    LD_LIBRARY_PATH=/opt/rh/llvm-toolset-7/root/usr/lib64 \
-    MANPATH=/opt/rh/llvm-toolset-7/root/usr/share/man \
-    PKG_CONFIG_PATH=/opt/rh/llvm-toolset-7/root/usr/lib64/pkgconfig \
-    PYTHONPATH=/opt/rh/llvm-toolset-7/root/usr/lib/python2.7/site-packages \
-    X_SCLS=llvm-toolset-7
+    JAVA_HOME=/opt/graalvm-ce-$GRAAL_VERSION/ 
 
-RUN    yum install -y bzip2-devel gcc gcc-c++ gzip less libcurl-devel make openssl-devel readline-devel tar vi which xz-devel zlib-devel 
-#    && yum install -y libcxx libcxx-devel llvm-toolset-7 \
-#    && rm -rf /var/cache/yum
-
-ADD gu-wrapper.sh /usr/local/bin/gu
+RUN    yum install -y bzip2-devel gcc gcc-c++ less libcurl-devel make openssl-devel readline-devel xz-devel zlib-devel && yum clean all -y 
 
 RUN set -eux \
     && curl --fail --silent --location --retry 3 ${GRAALVM_PKG} \
@@ -38,8 +28,6 @@ RUN set -eux \
         base="$(basename "$bin")"; \
         [ ! -e "/usr/bin/$base" ]; \
         alternatives --install "/usr/bin/$base" "$base" "$bin" 20000; \
-    done \
-
-    && chmod +x /usr/local/bin/gu
+    done 
 
 CMD java -version
