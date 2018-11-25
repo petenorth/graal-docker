@@ -14,7 +14,7 @@
 
 FROM debian:buster-slim
 
-ENV GRAAL_VERSION 1.0.0-rc5
+ARG GRAAL_VERSION 1.0.0-rc5
 
 RUN apt-get update && apt-get install -y \
   build-essential \
